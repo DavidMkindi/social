@@ -44,14 +44,19 @@ public class MainActivity extends BridgeActivity {
             rootView.setOnApplyWindowInsetsListener((v, insets) -> {
                 WindowInsetsCompat windowInsets = WindowInsetsCompat.toWindowInsetsCompat(insets);
                 
-                // Get navigation bar height
+                // Get status bar height for top padding
+                int statusBarHeight = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
+                
+                // Get navigation bar height for bottom padding
                 int navigationBarHeight = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
                 
+                // Apply top padding to account for system status bar
+                // This ensures the header positions below the status bar
                 // Apply bottom padding to account for system navigation bar
                 // This ensures the web content (especially bottom navigation) positions above the system bar
                 v.setPadding(
                     v.getPaddingLeft(),
-                    v.getPaddingTop(),
+                    statusBarHeight,
                     v.getPaddingRight(),
                     navigationBarHeight
                 );
