@@ -16,11 +16,11 @@
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:statusBarColor">@color/status_bar_color_light</item>
-        <item name="android:navigationBarColor">@color/navigation_bar_color_light</item>
+        <item name="android:statusBarColor">@color/status_bar_color_dark</item>
+        <item name="android:navigationBarColor">@color/navigation_bar_color_dark</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
     </style>
 
 
@@ -28,3 +28,4 @@
         <item name="android:background">@drawable/splash</item>
     </style>
 </resources>
+

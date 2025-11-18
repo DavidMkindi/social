@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Light theme colors -->
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    
+    <!-- App body background colors - matching web app -->
+    <color name="app_body_bg_light">#FFFFFF</color>
+    <color name="app_body_bg_dark">#000000</color>
+    
+    <!-- Navigation bar color - matches app body -->
+    <color name="navigation_bar_color_light">#FFFFFF</color>
+    <color name="navigation_bar_color_dark">#000000</color>
+    
+    <!-- Status bar color - matches app body -->
+    <color name="status_bar_color_light">#FFFFFF</color>
+    <color name="status_bar_color_dark">#000000</color>
+</resources>
+

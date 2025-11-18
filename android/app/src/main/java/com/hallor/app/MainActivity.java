@@ -1,6 +1,8 @@
 package com.hallor.app;
 
 import android.os.Bundle;
+import android.content.res.Configuration;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import com.getcapacitor.BridgeActivity;
@@ -10,16 +12,52 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Don't use edge-to-edge, let the system handle insets properly
-        // This ensures content doesn't overlap with status bar and navigation bar
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
+        // Enable edge-to-edge display
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         
-        // Set status bar and navigation bar appearance
+        // Update system bars based on current theme
+        updateSystemBars();
+    }
+    
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Update system bars when theme changes
+        updateSystemBars();
+    }
+    
+    private void updateSystemBars() {
+        // Get current theme (dark or light)
+        int nightModeFlags = getResources().getConfiguration().uiMode & 
+                            Configuration.UI_MODE_NIGHT_MASK;
+        boolean isDarkTheme = (nightModeFlags == Configuration.UI_MODE_NIGHT_YES);
+        
+        // Get color resource IDs
+        int navBarColorResId = isDarkTheme ? 
+            getResources().getIdentifier("navigation_bar_color_dark", "color", getPackageName()) :
+            getResources().getIdentifier("navigation_bar_color_light", "color", getPackageName());
+        
+        int statusBarColorResId = isDarkTheme ?
+            getResources().getIdentifier("status_bar_color_dark", "color", getPackageName()) :
+            getResources().getIdentifier("status_bar_color_light", "color", getPackageName());
+        
+        // Set navigation bar color to match app body
+        if (navBarColorResId != 0) {
+            getWindow().setNavigationBarColor(ContextCompat.getColor(this, navBarColorResId));
+        }
+        
+        // Set status bar color to match app body
+        if (statusBarColorResId != 0) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, statusBarColorResId));
+        }
+        
+        // Set status bar and navigation bar icon colors based on theme
         WindowInsetsControllerCompat windowInsetsController = 
             WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
         if (windowInsetsController != null) {
-            windowInsetsController.setAppearanceLightStatusBars(false);
-            windowInsetsController.setAppearanceLightNavigationBars(false);
+            // Light icons on dark background, dark icons on light background
+            windowInsetsController.setAppearanceLightStatusBars(!isDarkTheme);
+            windowInsetsController.setAppearanceLightNavigationBars(!isDarkTheme);
         }
     }
 }
