@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Hallor</string>
+    <string name="title_activity_main">Hallor</string>
+    <string name="package_name">com.hallor.app</string>
+    <string name="custom_url_scheme">com.hallor.app</string>
+</resources>
