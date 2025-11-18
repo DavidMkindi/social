@@ -10,8 +10,9 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Enable edge-to-edge display
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        // Don't use edge-to-edge, let the system handle insets properly
+        // This ensures content doesn't overlap with status bar and navigation bar
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
         
         // Set status bar and navigation bar appearance
         WindowInsetsControllerCompat windowInsetsController = 
