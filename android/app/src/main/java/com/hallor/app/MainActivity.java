@@ -75,18 +75,30 @@ public class MainActivity extends BridgeActivity {
                             Configuration.UI_MODE_NIGHT_MASK;
         boolean isDarkTheme = (nightModeFlags == Configuration.UI_MODE_NIGHT_YES);
         
-        // Get color resource IDs
+        // Get color resource IDs for navigation bar
         int navBarColorResId = isDarkTheme ? 
             getResources().getIdentifier("navigation_bar_color_dark", "color", getPackageName()) :
             getResources().getIdentifier("navigation_bar_color_light", "color", getPackageName());
+        
+        // Get color resource IDs for status bar (same as navigation bar)
+        int statusBarColorResId = isDarkTheme ? 
+            getResources().getIdentifier("status_bar_color_dark", "color", getPackageName()) :
+            getResources().getIdentifier("status_bar_color_light", "color", getPackageName());
         
         // Set navigation bar color to match app body
         if (navBarColorResId != 0) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, navBarColorResId));
         }
         
-        // Set status bar to transparent to allow content to draw behind it
-        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
+        // Set status bar color to match navigation bar (same background color)
+        if (statusBarColorResId != 0) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, statusBarColorResId));
+        } else {
+            // Fallback: use navigation bar color if status bar color not found
+            if (navBarColorResId != 0) {
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, navBarColorResId));
+            }
+        }
         
         // Set status bar and navigation bar icon colors based on theme
         WindowInsetsControllerCompat windowInsetsController = 
