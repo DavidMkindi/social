@@ -37,19 +37,13 @@ public class MainActivity extends BridgeActivity {
             getResources().getIdentifier("navigation_bar_color_dark", "color", getPackageName()) :
             getResources().getIdentifier("navigation_bar_color_light", "color", getPackageName());
         
-        int statusBarColorResId = isDarkTheme ?
-            getResources().getIdentifier("status_bar_color_dark", "color", getPackageName()) :
-            getResources().getIdentifier("status_bar_color_light", "color", getPackageName());
-        
         // Set navigation bar color to match app body
         if (navBarColorResId != 0) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, navBarColorResId));
         }
         
-        // Set status bar color to match app body
-        if (statusBarColorResId != 0) {
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, statusBarColorResId));
-        }
+        // Set status bar to transparent to allow content to draw behind it
+        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
         
         // Set status bar and navigation bar icon colors based on theme
         WindowInsetsControllerCompat windowInsetsController = 
