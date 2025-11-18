@@ -58,14 +58,16 @@ jobs:
       run: |
         echo "Searching for APK files..."
         find android/app/build/outputs -name "*.apk" -type f || true
+        echo "Listing APK directory structure:"
         ls -la android/app/build/outputs/apk/ || true
         ls -la android/app/build/outputs/apk/debug/ || true
+        ls -la android/app/build/outputs/apk/release/ || true
       
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: app-debug
-        path: android/app/build/outputs/apk/debug/*.apk
+        name: app-apk
+        path: android/app/build/outputs/apk/**/*.apk
         retention-days: 30
         if-no-files-found: error
 
