@@ -62,11 +62,12 @@ jobs:
         ls -la android/app/build/outputs/apk/ || true
         ls -la android/app/build/outputs/apk/debug/ || true
         ls -la android/app/build/outputs/apk/release/ || true
+        echo "Expected APK name: Hallor-debug.apk or Hallor-release.apk"
       
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: app-apk
+        name: hallor-apk
         path: android/app/build/outputs/apk/**/*.apk
         retention-days: 30
         if-no-files-found: error
