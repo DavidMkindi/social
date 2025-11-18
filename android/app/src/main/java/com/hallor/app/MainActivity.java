@@ -18,7 +18,6 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import com.getcapacitor.BridgeActivity;
-import com.getcapacitor.CapacitorWebView;
 
 public class MainActivity extends BridgeActivity {
     private boolean isOnline = true;
@@ -190,12 +189,9 @@ public class MainActivity extends BridgeActivity {
                 // When offline: LOAD_CACHE_ELSE_NETWORK (use cache, never show error)
                 updateCacheMode(settings);
                 
-                settings.setAppCacheEnabled(true);
+                // Enable DOM storage and database for caching
                 settings.setDomStorageEnabled(true);
                 settings.setDatabaseEnabled(true);
-                
-                // Set cache size (50MB)
-                settings.setAppCacheMaxSize(50 * 1024 * 1024);
                 
                 // Enable JavaScript and other essential settings
                 settings.setJavaScriptEnabled(true);
@@ -204,10 +200,10 @@ public class MainActivity extends BridgeActivity {
                 settings.setBlockNetworkImage(false);
                 settings.setBlockNetworkLoads(false);
                 
-                // Set cache path
-                String cachePath = getApplicationContext().getCacheDir().getAbsolutePath();
-                settings.setAppCachePath(cachePath);
-                settings.setDatabasePath(cachePath);
+                // Enable mixed content for better caching
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    settings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+                }
                 
                 // Set custom WebViewClient to handle offline scenarios
                 webView.setWebViewClient(new OfflineCapableWebViewClient());
