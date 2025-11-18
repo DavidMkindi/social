@@ -2,8 +2,10 @@ package com.hallor.app;
 
 import android.os.Bundle;
 import android.content.res.Configuration;
+import android.view.View;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import com.getcapacitor.BridgeActivity;
 
@@ -20,10 +22,46 @@ public class MainActivity extends BridgeActivity {
     }
     
     @Override
+    public void onStart() {
+        super.onStart();
+        // Apply window insets after view is created
+        getWindow().getDecorView().post(() -> applyWindowInsets());
+    }
+    
+    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Update system bars when theme changes
         updateSystemBars();
+        // Reapply window insets
+        applyWindowInsets();
+    }
+    
+    private void applyWindowInsets() {
+        // Get the root view of the activity
+        View rootView = findViewById(android.R.id.content);
+        if (rootView != null) {
+            rootView.setOnApplyWindowInsetsListener((v, insets) -> {
+                WindowInsetsCompat windowInsets = WindowInsetsCompat.toWindowInsetsCompat(insets);
+                
+                // Get navigation bar height
+                int navigationBarHeight = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom;
+                
+                // Apply bottom padding to account for system navigation bar
+                // This ensures the web content (especially bottom navigation) positions above the system bar
+                v.setPadding(
+                    v.getPaddingLeft(),
+                    v.getPaddingTop(),
+                    v.getPaddingRight(),
+                    navigationBarHeight
+                );
+                
+                return windowInsets.toWindowInsets();
+            });
+            
+            // Request insets to be applied
+            rootView.requestApplyInsets();
+        }
     }
     
     private void updateSystemBars() {
