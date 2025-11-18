@@ -48,7 +48,11 @@ jobs:
       
     - name: Build APK
       working-directory: android
-      run: ./gradlew assembleRelease
+      run: ./gradlew assembleRelease --no-daemon --stacktrace --info
+      env:
+        ANDROID_HOME: ${{ env.ANDROID_HOME }}
+        ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
+        GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true"
       
     - name: Upload APK
       uses: actions/upload-artifact@v4
